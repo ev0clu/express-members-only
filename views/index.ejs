@@ -8,13 +8,9 @@
         <link rel="stylesheet" href="/stylesheets/style.css" />
     </head>
     <body>
-        <header><%- include('./partials/header'); %></header>
+        <header><%- include('./partials/header', {title:title}); %></header>
         <div class="content">
-            <h1><%= title %></h1>
-            <p>
-                Welcome to Members only, it is a very basic authentication website developed with
-                Express.
-            </p>
+            <p>Members only, it is a very basic authentication website developed with Express.</p>
         </div>
         <footer><%- include('./partials/footer'); %></footer>
     </body>
