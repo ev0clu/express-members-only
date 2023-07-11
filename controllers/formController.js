@@ -19,8 +19,6 @@ exports.signup_get = asyncHandler(async (req, res, next) => {
 // Display Sign up form on POST.
 exports.signup_post = [
     // Validate and sanitize fields.
-    // Validate and sanitize fields.
-
     body('first_name', 'First name must be min. 3 and max. 20 characters')
         .trim()
         .isLength({ min: 1, max: 20 })
@@ -74,7 +72,7 @@ exports.signup_post = [
                 errors: errors.array()
             });
         } else {
-            // Data from form is valid. Save movie.
+            // Data from form is valid. Save user.
             await user.save();
             res.redirect('/');
         }
@@ -87,59 +85,37 @@ exports.login_get = asyncHandler(async (req, res, next) => {
 });
 
 // Display Log in form on POST.
-exports.login_post = asyncHandler(async (req, res, next) => {
-    res.send('NOT IMPLEMENTED: login POST');
-});
-/*
-// Handle Director create on POST.
-exports.signup_post = [
+exports.login_post = [
     // Validate and sanitize fields.
-    body('first_name')
+    body('username', 'Username does not exist in the database')
         .trim()
-        .isLength({ min: 1 })
-        .escape()
-        .withMessage('First name must be specified.'),
-    body('last_name')
-        .trim()
-        .isLength({ min: 1 })
-        .escape()
-        .withMessage('Last name must be specified.'),
-    body('date_of_birth', 'Invalid date of birth')
-        .optional({ values: 'falsy' })
-        .isISO8601()
-        .toDate(),
-    body('date_of_death', 'Invalid date of death')
-        .optional({ values: 'falsy' })
-        .isISO8601()
-        .toDate(),
+        .isLength({ min: 4, max: 10 })
+        .custom(async (username, { req }) => {
+            const existingUsername = await User.findOne({ username: username });
+
+            if (existingUsername) {
+                if (existingUsername.password !== req.body.password) {
+                    throw new Error('Password does not match');
+                }
+            }
+        })
+        .escape(),
 
     // Process request after validation and sanitization.
     asyncHandler(async (req, res, next) => {
         // Extract the validation errors from a request.
         const errors = validationResult(req);
 
-        // Create Director object with escaped and trimmed data
-        const director = new Director({
-            first_name: req.body.first_name,
-            last_name: req.body.last_name,
-            date_of_birth: req.body.date_of_birth,
-            date_of_death: req.body.date_of_death
-        });
-
         if (!errors.isEmpty()) {
-            // There are errors. Render form again with sanitized values/errors messages.
-            res.render('director_form', {
-                title: 'Create Director',
-                director: director,
+            // There are errors. Render form again with sanitized values/error messages.
+
+            res.render('login-form', {
+                title: 'Log in',
                 errors: errors.array()
             });
-            return;
         } else {
             // Data from form is valid.
-            // Save director.
-            await director.save();
-            // Redirect to new director record.
-            res.redirect(director.url);
+            res.redirect('/');
         }
     })
-];*/
+];
