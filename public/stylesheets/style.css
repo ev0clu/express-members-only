@@ -26,12 +26,10 @@ header {
 }
 
 .header-title {
-    color: #059669;
-    border-bottom: 2px solid #059669;
-}
-
-.header-title:hover {
-    cursor: pointer;
+    background: linear-gradient(to right, #059669, #34d399, #5eead4);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
 }
 
 .nav-bar {
@@ -41,29 +39,91 @@ header {
     list-style: none;
 }
 
-header li {
+header li a {
     padding: 10px 15px;
     border-radius: 8px;
     font-weight: 700;
+    color: black;
+    text-decoration: none;
 }
 
-header li:hover {
+header li a:hover {
     cursor: pointer;
     background-color: #059669;
     color: white;
 }
 
-header li:active {
+header li a:active {
     background-color: #047857;
     box-shadow: rgba(225, 228, 232, 0.2) 0 1px 0 inset;
 }
 
-header li:focus {
+header li a:focus {
     outline: 1px transparent;
 }
 
 .content {
     flex: 1;
+    margin: auto;
+    padding-top: 1rem;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-control {
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 5px 10px;
+}
+
+label,
+legend {
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+fieldset {
+    padding: 0.5rem;
+}
+
+.form-group-avatar {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    column-gap: 0.5rem;
+}
+
+input[type='radio'] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+input[type='radio'] + img {
+    cursor: pointer;
+    height: 4rem;
+    width: auto;
+    border-radius: 50%;
+}
+
+input[type='radio']:checked + img {
+    outline: 3px solid #059669;
+    box-shadow:
+        rgba(0, 0, 0, 0.16) 0px 3px 6px,
+        rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+input[type='radio'] + img:hover {
+    opacity: 0.8;
 }
 
 .btn-primary {
@@ -151,5 +211,11 @@ footer {
     header li {
         padding: 4px 8px;
         border-radius: 4px;
+    }
+
+    .form-group-avatar {
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        row-gap: 0.3rem;
     }
 }
