@@ -1,6 +1,6 @@
 # **Members only App**
 
-A simple authentication app has built with Node.js and Express.js framework. Express generator has been used to create the skeleton of the project and EJS view engine has been used as templating engine. The app uses [MVC pattern](https://developer.mozilla.org/en-US/docs/Glossary/MVC) and mongoose ORM (Object Relational Model). For authenticate the users, passport.js is used. Additionally, in oder to make secure the password, bcrypt.js is used for the project.
+A simple authentication app has built with Node.js and Express.js framework. Express generator has been used to create the skeleton of the project and EJS view engine has been used as templating engine. The app uses [MVC pattern](https://developer.mozilla.org/en-US/docs/Glossary/MVC) and mongoose ODM (Object Document Model). For authenticate the users, passport.js is used. Additionally, in oder to make secure the password, bcrypt.js is used for the project.
 
 The app feature is to let every visitor to view every messages as anonymous post, but only logged in 'club members' can see which messages is posted by which member.
 There is also a feature to sign-in into the club as admin, who can moderate (update, remove) the messages, which is not possible to 'normal members'.
