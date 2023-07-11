@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title><%= title %></title>
+        <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+        <link rel="stylesheet" href="/stylesheets/style.css" />
+    </head>
+    <body>
+        <header><%- include('./partials/header', {title:title}); %></header>
+        <div class="content">
+            <form method="POST" action="">
+                <div class="form-group">
+                    <label for="first_name">First Name</label>
+                    <input
+                        id="first_name"
+                        class="form-control"
+                        type="text"
+                        placeholder="First name"
+                        name="first_name"
+                        required="true"
+                    />
+                </div>
+                <div class="form-group">
+                    <label for="last_name">Last Name</label>
+                    <input
+                        id="last_name"
+                        class="form-control"
+                        type="text"
+                        placeholder="Last name"
+                        name="last_name"
+                        required="true"
+                    />
+                </div>
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input
+                        id="username"
+                        class="form-control"
+                        type="text"
+                        placeholder="Username"
+                        name="username"
+                        required="true"
+                    />
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input
+                        id="password"
+                        class="form-control"
+                        type="password"
+                        placeholder="Password"
+                        name="password"
+                        required="true"
+                    />
+                </div>
+                <div class="form-group">
+                    <label for="conrirm_password">Confirm Password</label>
+                    <input
+                        id="conrirm_password"
+                        class="form-control"
+                        type="password"
+                        placeholder="Confirm Password"
+                        name="conrirm_password"
+                        required="true"
+                    />
+                </div>
+                <fieldset>
+                    <legend>Avatar</legend>
+                    <div class="form-group-avatar">
+                        <% images.forEach(image => { if(images.indexOf(image) === 0) { %>
+                        <label>
+                            <input
+                                type="radio"
+                                name="avatar"
+                                value="<%= image.name %>"
+                                checked="checked"
+                            />
+                            <img src="<%= image.url %>" alt="<%= image.name %>" />
+                        </label>
+                        <% } else { %>
+                        <label>
+                            <input type="radio" name="avatar" value="<%= image.name %>" />
+                            <img src="<%= image.url %>" alt="<%= image.name %>" />
+                            <% } %> </label
+                        ><% }); %>
+                    </div>
+                </fieldset>
+                <button class="btn-primary" type="submit">Submit</button>
+            </form>
+            <% if (errors) { %>
+            <ul>
+                <% errors.forEach((error) => { %>
+                <li><%= error.msg %></li>
+                <% }); %>
+            </ul>
+            <% } %>
+        </div>
+        <footer><%- include('./partials/footer'); %></footer>
+    </body>
+</html>
