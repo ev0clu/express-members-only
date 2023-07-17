@@ -10,7 +10,24 @@
     <body>
         <header><%- include('./partials/header', {title:title}); %></header>
         <div class="content">
-            <p>Members only, it is a very basic authentication website developed with Express.</p>
+            <div class="all-post-wrapper">
+                <% allMessages.map(message => { %>
+                <div class="post-wrapper">
+                    <div class="user-wrapper">
+                        <img
+                            src="<%= message.createdBy.img %>"
+                            alt="<%= message.createdBy.name %>"
+                        />
+                        <h3><%= message.createdBy.username %></h3>
+                        <p><%= message.timestamp %></p>
+                    </div>
+                    <div class="message-wrapper">
+                        <h1 class="message-title"><%= message.title %></h1>
+                        <p class="message-text"><%= message.text %></p>
+                    </div>
+                </div>
+                <% }) %>
+            </div>
         </div>
         <footer><%- include('./partials/footer'); %></footer>
     </body>
