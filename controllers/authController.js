@@ -2,6 +2,8 @@ const User = require('../models/User');
 const asyncHandler = require('express-async-handler');
 const { body, validationResult } = require('express-validator');
 
+const passport = require('passport');
+
 const images = [
     { name: 'bear', url: '/images/avatars/bear.png' },
     { name: 'fish', url: '/images/avatars/fish.png' },
@@ -13,7 +15,7 @@ const images = [
 
 // Display Sign up form on GET.
 exports.signup_get = asyncHandler(async (req, res, next) => {
-    res.render('signup-form', { title: 'Sign Up', images: images, errors: null });
+    res.render('signup', { title: 'Sign Up', images: images, errors: null });
 });
 
 // Display Sign up form on POST.
@@ -31,7 +33,7 @@ exports.signup_post = [
         .trim()
         .isLength({ min: 4, max: 10 })
         .custom(async (username) => {
-            const existingUsername = await User.findOne({ username });
+            const existingUsername = await User.findOne({ username: username });
 
             if (existingUsername) {
                 throw new Error('Username already in use');
@@ -66,7 +68,7 @@ exports.signup_post = [
         if (!errors.isEmpty()) {
             // There are errors. Render form again with sanitized values/error messages.
 
-            res.render('signup-form', {
+            res.render('signup', {
                 title: 'Sign Up',
                 images: images,
                 errors: errors.array()
@@ -81,11 +83,32 @@ exports.signup_post = [
 
 // Display Log in form on GET.
 exports.login_get = asyncHandler(async (req, res, next) => {
-    res.render('login-form', { title: 'Log in', errors: null });
+    res.render('login', { title: 'Log in', errors: null });
 });
 
-// Display Log in form on POST.
-exports.login_post = [
+// Display Log in form on POST with passport.
+exports.login_post = asyncHandler(async (req, res, next) => {
+    // Extract the validation errors from a request.
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        // There are errors. Render form again with sanitized values/error messages.
+
+        res.render('login', {
+            title: 'Log in',
+            errors: errors.array()
+        });
+    } else {
+        // Data from form is valid.
+        passport.authenticate('local', {
+            successRedirect: '/',
+            failureRedirect: '/'
+        });
+    }
+});
+
+// Display Log in form on POST with express validator.
+/*exports.login_post = [
     // Validate and sanitize fields.
     body('username', 'Username does not exist in the database')
         .trim()
@@ -109,13 +132,16 @@ exports.login_post = [
         if (!errors.isEmpty()) {
             // There are errors. Render form again with sanitized values/error messages.
 
-            res.render('login-form', {
+            res.render('login', {
                 title: 'Log in',
                 errors: errors.array()
             });
         } else {
             // Data from form is valid.
-            res.redirect('/');
+            passport.authenticate('local', {
+                successRedirect: '/',
+                failureRedirect: '/'
+            });
         }
     })
-];
+];*/
