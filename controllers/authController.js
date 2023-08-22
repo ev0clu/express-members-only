@@ -1,8 +1,8 @@
 const User = require('../models/User');
 const asyncHandler = require('express-async-handler');
 const { body, validationResult } = require('express-validator');
-
 const passport = require('passport');
+const bcrypt = require('bcryptjs');
 
 const images = [
     { name: 'bear', url: '/images/avatars/bear.png' },
@@ -46,24 +46,13 @@ exports.signup_post = [
         .escape(),
     body('confirm-password', 'Password fields do not match')
         .trim()
-        .custom((confirmPassword, { req }) => confirmPassword === req.body.password)
+        .custom((confirmPassword, { req }) => confirmPassword !== req.body.password)
         .escape(),
 
     // Process request after validation and sanitization.
     asyncHandler(async (req, res, next) => {
         // Extract the validation errors from a request.
         const errors = validationResult(req);
-
-        // Create a User object with escaped and trimmed data.
-        const user = new User({
-            first_name: req.body.first_name,
-            last_name: req.body.last_name,
-            username: req.body.username,
-            password: req.body.password,
-            member_status: req.body.member_status,
-            admin_status: req.body.admin_status,
-            image: req.body.avatar
-        });
 
         if (!errors.isEmpty()) {
             // There are errors. Render form again with sanitized values/error messages.
@@ -75,8 +64,27 @@ exports.signup_post = [
             });
         } else {
             // Data from form is valid. Save user.
-            await user.save();
-            res.redirect('/');
+            bcrypt.hash(req.body.password, 10, async (err, hashedPassword) => {
+                if (err) {
+                    return next(err);
+                } else {
+                    // Create a User object with escaped and trimmed data.
+                    const user = new User({
+                        first_name: req.body.first_name,
+                        last_name: req.body.last_name,
+                        username: req.body.username,
+                        password: hashedPassword,
+                        member_status: req.body.member_status,
+                        admin_status: req.body.admin_status,
+                        image: req.body.avatar
+                    });
+
+                    await user.save((err) => {
+                        if (err) return next(err);
+                        return res.redirect('/login');
+                    });
+                }
+            });
         }
     })
 ];
@@ -86,29 +94,18 @@ exports.login_get = asyncHandler(async (req, res, next) => {
     res.render('login', { title: 'Log in', errors: null });
 });
 
-// Display Log in form on POST with passport.
-exports.login_post = asyncHandler(async (req, res, next) => {
-    // Extract the validation errors from a request.
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-        // There are errors. Render form again with sanitized values/error messages.
-
-        res.render('login', {
-            title: 'Log in',
-            errors: errors.array()
-        });
-    } else {
-        // Data from form is valid.
-        passport.authenticate('local', {
-            successRedirect: '/',
-            failureRedirect: '/'
-        });
-    }
+// Display Log out form on GET.
+exports.logout_get = asyncHandler(async (req, res, next) => {
+    req.logout(function (err) {
+        if (err) {
+            return next(err);
+        }
+        res.redirect('/');
+    });
 });
 
-// Display Log in form on POST with express validator.
-/*exports.login_post = [
+// Display Log in form on POST with express validator and passport.
+exports.login_post = [
     // Validate and sanitize fields.
     body('username', 'Username does not exist in the database')
         .trim()
@@ -140,8 +137,9 @@ exports.login_post = asyncHandler(async (req, res, next) => {
             // Data from form is valid.
             passport.authenticate('local', {
                 successRedirect: '/',
-                failureRedirect: '/'
+                failureRedirect: '/',
+                failureMessage: true
             });
         }
     })
-];*/
+];
