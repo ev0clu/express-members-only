@@ -43,15 +43,12 @@ passport.use(
             if (!user) {
                 return done(null, false, { message: 'Incorrect username' });
             }
-            await bcrypt.compare(password, user.password, (err, res) => {
-                if (res) {
-                    // passwords match! log user in
-                    return done(null, user);
-                } else {
-                    // passwords do not match!
-                    return done(null, false, { message: 'Incorrect password' });
-                }
-            });
+            const match = await bcrypt.compare(password, user.password);
+            if (!match) {
+                // passwords do not match!
+                return done(null, false, { message: 'Incorrect password' });
+            }
+            return done(null, user);
         } catch (err) {
             return done(err);
         }
@@ -87,6 +84,11 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use(function (req, res, next) {
+    res.locals.currentUser = req.user;
+    next();
+});
 
 app.use(logger('dev'));
 app.use(express.json());

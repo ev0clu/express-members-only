@@ -64,6 +64,7 @@ exports.signup_post = [
             });
         } else {
             // Data from form is valid. Save user.
+
             bcrypt.hash(req.body.password, 10, async (err, hashedPassword) => {
                 if (err) {
                     return next(err);
@@ -79,10 +80,8 @@ exports.signup_post = [
                         image: req.body.avatar
                     });
 
-                    await user.save((err) => {
-                        if (err) return next(err);
-                        return res.redirect('/login');
-                    });
+                    await user.save();
+                    res.redirect('/login');
                 }
             });
         }
@@ -105,41 +104,7 @@ exports.logout_get = asyncHandler(async (req, res, next) => {
 });
 
 // Display Log in form on POST with express validator and passport.
-exports.login_post = [
-    // Validate and sanitize fields.
-    body('username', 'Username does not exist in the database')
-        .trim()
-        .isLength({ min: 4, max: 10 })
-        .custom(async (username, { req }) => {
-            const existingUsername = await User.findOne({ username: username });
-
-            if (existingUsername) {
-                if (existingUsername.password !== req.body.password) {
-                    throw new Error('Password does not match');
-                }
-            }
-        })
-        .escape(),
-
-    // Process request after validation and sanitization.
-    asyncHandler(async (req, res, next) => {
-        // Extract the validation errors from a request.
-        const errors = validationResult(req);
-
-        if (!errors.isEmpty()) {
-            // There are errors. Render form again with sanitized values/error messages.
-
-            res.render('login', {
-                title: 'Log in',
-                errors: errors.array()
-            });
-        } else {
-            // Data from form is valid.
-            passport.authenticate('local', {
-                successRedirect: '/',
-                failureRedirect: '/',
-                failureMessage: true
-            });
-        }
-    })
-];
+exports.login_post = passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/login'
+});
