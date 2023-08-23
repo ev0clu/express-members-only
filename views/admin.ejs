@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title><%= title %></title>
+        <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+        <link rel="stylesheet" href="/stylesheets/style.css" />
+    </head>
+    <body>
+        <header><%- include('./partials/header', {title:title}); %></header>
+        <div class="content">
+            <form method="POST" action="">
+                <div class="rule-container">
+                    <h2>Do you really want to be admin?</h2>
+                    <p>You should answer to the following question.</p>
+                    <p><b>How much is the π value by 4 digits?</b></p>
+                    <input type="text" name="admin_key" />
+                </div>
+                <button class="btn-primary" type="submit">Submit</button>
+            </form>
+            <% if (errors) { %>
+            <ul>
+                <% errors.forEach((error) => { %>
+                <li><%= error.msg %></li>
+                <% }); %>
+            </ul>
+            <% } %>
+        </div>
+        <footer><%- include('./partials/footer'); %></footer>
+    </body>
+</html>

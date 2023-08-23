@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const index_controller = require('../controllers/indexController');
 const auth_controller = require('../controllers/authController');
-const join_controller = require('../controllers/joinController');
+const permission_controller = require('../controllers/permissionController');
 
 /* GET home page. */
 router.get('/', index_controller.index_get);
@@ -26,9 +26,18 @@ router.post('/login', auth_controller.login_post);
 router.get('/logout', auth_controller.logout_get);
 
 /* GET request for member form page. */
-router.get('/member', join_controller.member_get);
+router.get('/member', permission_controller.member_get);
 
 /* POST request for member form page. */
-router.post('/member', join_controller.member_post);
+router.post('/member', permission_controller.member_post);
+
+/* GET request for profile form page. */
+router.get('/profile', permission_controller.profile_get);
+
+/* GET request for profile form page. */
+router.get('/admin', permission_controller.admin_get);
+
+/* POST request for profile form page. */
+router.post('/admin', permission_controller.admin_post);
 
 module.exports = router;

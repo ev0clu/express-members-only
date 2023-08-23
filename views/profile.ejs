@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title><%= title %></title>
+        <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+        <link rel="stylesheet" href="/stylesheets/style.css" />
+    </head>
+    <body>
+        <header><%- include('./partials/header', {title:title}); %></header>
+        <div class="content">
+            <div class="rule-container">
+                <h1><%= currentUser.username %> informations:</h1>
+                <p>First name: <%= currentUser.first_name %></p>
+                <p>Last name: <%= currentUser.last_name %></p>
+                <p>
+                    Member status: <% if(currentUser.member_status){ %> Member <% } else { %>Not
+                    Member<% } %>
+                </p>
+                <p>
+                    Admin status: <% if(currentUser.admin_status){ %>Admin<% } else { %>Not Admin<%
+                    } %>
+                </p>
+                <% if(!currentUser.admin_status){ %>
+                <a href="/admin">Become Admin!</a>
+                <% } %>
+            </div>
+            <% if (errors) { %>
+            <ul>
+                <% errors.forEach((error) => { %>
+                <li><%= error.msg %></li>
+                <% }); %>
+            </ul>
+            <% } %>
+        </div>
+        <footer><%- include('./partials/footer'); %></footer>
+    </body>
+</html>
