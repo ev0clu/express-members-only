@@ -13,16 +13,21 @@ body {
         Helvetica,
         Arial,
         sans-serif;
-    padding: 50px 50px 0 50px;
+    padding: 0px 50px 0 50px;
     min-height: 100vh;
     background-color: #f5f5f4;
 }
 
 header {
+    position: sticky;
+    top: 0px;
+    padding-top: 10px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    background-color: #f5f5f4;
+    z-index: 10;
 }
 
 .header-title {
@@ -39,7 +44,8 @@ header {
     list-style: none;
 }
 
-header li a {
+header li a,
+.join-btn {
     padding: 10px 15px;
     border-radius: 8px;
     font-weight: 700;
@@ -47,18 +53,21 @@ header li a {
     text-decoration: none;
 }
 
-header li a:hover {
+header li a:hover,
+.join-btn:hover {
     cursor: pointer;
     background-color: #059669;
     color: white;
 }
 
-header li a:active {
+header li a:active,
+.join-btn:active {
     background-color: #047857;
     box-shadow: rgba(225, 228, 232, 0.2) 0 1px 0 inset;
 }
 
-header li a:focus {
+header li a:focus,
+.join-btn:focus {
     outline: 1px transparent;
 }
 
@@ -219,6 +228,28 @@ input[type='radio'] + img:hover {
 
 .btn-primary:focus {
     outline: 1px transparent;
+}
+
+.rule-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.add-message-container {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: center;
+    padding: 1rem;
+}
+
+textarea,
+#message-title {
+    resize: none;
+    padding: 8px;
+    width: 15rem;
 }
 
 footer {

@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title><%= title %></title>
+        <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+        <link rel="stylesheet" href="/stylesheets/style.css" />
+    </head>
+    <body>
+        <header><%- include('./partials/header', {title:title}); %></header>
+        <div class="content">
+            <form method="POST" action="">
+                <div class="rule-container">
+                    <h1>You should accept our rule, before join!</h1>
+                    <h2>Rule</h2>
+                    <p>1. No Spam / Advertising / Self-promote</p>
+                    <p>2. Do not post “offensive” posts and links</p>
+                    <p>3. Remain respectful of other members at all times</p>
+                    <div class="checkbox-container">
+                        <input type="checkbox" name="checkbox" />
+                        I agree
+                    </div>
+                </div>
+                <button class="btn-primary" type="submit">Submit</button>
+            </form>
+            <% if (errors) { %>
+            <ul>
+                <% errors.forEach((error) => { %>
+                <li><%= error.msg %></li>
+                <% }); %>
+            </ul>
+            <% } %>
+        </div>
+        <footer><%- include('./partials/footer'); %></footer>
+    </body>
+</html>

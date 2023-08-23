@@ -2,9 +2,13 @@ var express = require('express');
 var router = express.Router();
 const index_controller = require('../controllers/indexController');
 const auth_controller = require('../controllers/authController');
+const join_controller = require('../controllers/joinController');
 
 /* GET home page. */
 router.get('/', index_controller.index_get);
+
+/* POST home page. */
+router.post('/', index_controller.index_post);
 
 /* GET request for signup form page. */
 router.get('/signup', auth_controller.signup_get);
@@ -20,5 +24,11 @@ router.post('/login', auth_controller.login_post);
 
 /* GET request for logout form page. */
 router.get('/logout', auth_controller.logout_get);
+
+/* GET request for member form page. */
+router.get('/member', join_controller.member_get);
+
+/* POST request for member form page. */
+router.post('/member', join_controller.member_post);
 
 module.exports = router;

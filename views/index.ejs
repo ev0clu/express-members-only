@@ -9,6 +9,24 @@
     </head>
     <body>
         <header><%- include('./partials/header', {title:title}); %></header>
+        <% if (currentUser && !currentUser.member_status) { %>
+        <p>
+            Do you want to be member and write comments? <a href="/member">Click here</a> and join
+        </p>
+        <% } %> <% if (currentUser && currentUser.member_status) { %>
+        <form method="POST" action="">
+            <div class="add-message-container">
+                <input id="message-title" type="text" name="title" placeholder="Title" />
+                <textarea
+                    class="new_message"
+                    placeholder="Text"
+                    name="new_message"
+                    rows="5"
+                ></textarea>
+                <button class="btn-primary" type="submit">Add message</button>
+            </div>
+        </form>
+        <% } %>
         <div class="content">
             <div class="all-post-wrapper">
                 <% allMessages.map(message => { %>
