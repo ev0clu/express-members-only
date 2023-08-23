@@ -172,7 +172,7 @@ img {
 }
 
 input[type='radio']:checked + img {
-    outline: 3px solid #059669;
+    outline: 3px solid #5eead4;
     box-shadow:
         rgba(0, 0, 0, 0.16) 0px 3px 6px,
         rgba(0, 0, 0, 0.23) 0px 3px 6px;
@@ -235,6 +235,17 @@ input[type='radio'] + img:hover {
     flex-direction: column;
     gap: 8px;
     margin-bottom: 20px;
+}
+
+.be-member-text {
+    margin: auto;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    color: white;
+    background-color: #059669;
+    box-shadow:
+        rgba(0, 0, 0, 0.12) 0px 1px 3px,
+        rgba(0, 0, 0, 0.24) 0px 1px 2px;
+    z-index: 10;
 }
 
 .add-message-container {
