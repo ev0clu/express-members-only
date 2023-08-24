@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title><%= title %></title>
+        <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+        <link rel="stylesheet" href="/stylesheets/style.css" />
+    </head>
+    <body>
+        <header><%- include('./partials/header', {title:title}); %></header>
+        <div class="content">
+            <form method="POST" action="">
+                <h2>Do you really want to delete this post?</h2>
+                <div class="content">
+                    <div class="all-post-wrapper">
+                        <div class="post-wrapper">
+                            <div class="user-wrapper">
+                                <img
+                                    src="<%= message.createdBy.img %>"
+                                    alt="<%= message.createdBy.name %>"
+                                />
+                                <h3><%= message.createdBy.username %></h3>
+                                <p><%= message.timestamp %></p>
+                            </div>
+                            <div class="message-wrapper">
+                                <h1 class="message-title"><%= message.title %></h1>
+                                <p class="message-text"><%= message.text %></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn-primary" type="submit">Delete</button>
+            </form>
+            <% if (errors) { %>
+            <ul>
+                <% errors.forEach((error) => { %>
+                <li><%= error.msg %></li>
+                <% }); %>
+            </ul>
+            <% } %>
+        </div>
+        <footer><%- include('./partials/footer'); %></footer>
+    </body>
+</html>

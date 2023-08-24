@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title><%= title %></title>
+        <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+        <link rel="stylesheet" href="/stylesheets/style.css" />
+    </head>
+    <body>
+        <header><%- include('./partials/header', {title:title}); %></header>
+        <div class="content">
+            <form method="POST" action="">
+                <div class="content">
+                    <div class="all-post-wrapper">
+                        <div class="post-wrapper">
+                            <div class="user-wrapper">
+                                <img
+                                    src="<%= message.createdBy.img %>"
+                                    alt="<%= message.createdBy.name %>"
+                                />
+                                <h3><%= message.createdBy.username %></h3>
+                                <p><%= message.timestamp %></p>
+                            </div>
+                            <div class="message-wrapper">
+                                <input
+                                    class="message-title"
+                                    name="title"
+                                    value="<%= message.title %>"
+                                />
+                                <input
+                                    class="message-text"
+                                    name="text"
+                                    value="<%=  message.text %>"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn-primary" type="submit">Edit</button>
+            </form>
+            <% if (errors) { %>
+            <ul>
+                <% errors.forEach((error) => { %>
+                <li><%= error.msg %></li>
+                <% }); %>
+            </ul>
+            <% } %>
+        </div>
+        <footer><%- include('./partials/footer'); %></footer>
+    </body>
+</html>

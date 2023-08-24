@@ -42,12 +42,27 @@
                         <% } else { %>
                         <h3>Anonymous</h3>
                         <p>MM/DD/YYYY HH:MM</p>
-
                         <% } %>
                     </div>
                     <div class="message-wrapper">
                         <h1 class="message-title"><%= message.title %></h1>
                         <p class="message-text"><%= message.text %></p>
+                        <% if (currentUser && currentUser.member_status) { %>
+                        <div class="icons-container">
+                            <a href="<%= message.url %>/edit"
+                                ><img
+                                    class="edit-icon"
+                                    src="/images/icons/edit.svg"
+                                    alt="Edit icon"
+                                /> </a
+                            ><a href="<%= message.url %>/delete"
+                                ><img
+                                    class="delete-icon"
+                                    src="/images/icons/delete.svg"
+                                    alt="Delete icon"
+                            /></a>
+                        </div>
+                        <% } %>
                     </div>
                 </div>
                 <% }) %>

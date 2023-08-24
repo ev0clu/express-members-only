@@ -34,10 +34,22 @@ router.post('/member', permission_controller.member_post);
 /* GET request for profile form page. */
 router.get('/profile', permission_controller.profile_get);
 
-/* GET request for profile form page. */
+/* GET request for admin form page. */
 router.get('/admin', permission_controller.admin_get);
 
-/* POST request for profile form page. */
+/* POST request for admin form page. */
 router.post('/admin', permission_controller.admin_post);
+
+/* GET request for edit form page. */
+router.get('/post/:id/edit', permission_controller.post_edit_get);
+
+/* POST request for edit form page. */
+router.post('/post/:id/edit', permission_controller.post_edit_post);
+
+/* GET request for delete form page. */
+router.get('/post/:id/delete', permission_controller.post_delete_get);
+
+/* POST request for delete form page. */
+router.post('/post/:id/delete', permission_controller.post_delete_post);
 
 module.exports = router;
