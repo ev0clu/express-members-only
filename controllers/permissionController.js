@@ -119,6 +119,7 @@ exports.post_edit_post = [
         .trim()
         .isLength({ min: 5 })
         .escape(),
+
     // Process request after validation and sanitization.
     asyncHandler(async (req, res, next) => {
         // Extract the validation errors from a request.
@@ -147,7 +148,7 @@ exports.post_edit_post = [
             // Data from form is valid. Update the record.
             await Message.findByIdAndUpdate(req.params.id, message, {});
 
-            // Redirect to movie detail page.
+            // Redirect to home page.
             res.redirect('/');
         }
     })

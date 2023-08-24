@@ -16,13 +16,20 @@
         <% } %> <% if (currentUser && currentUser.member_status) { %>
         <form method="POST" action="">
             <div class="add-message-container">
-                <input id="message-title" type="text" name="title" placeholder="Title" />
+                <input id="message-title" type="text" name="message_title" placeholder="Title" />
                 <textarea
-                    class="new_message"
+                    class="message_text"
                     placeholder="Text"
-                    name="new_message"
+                    name="message_text"
                     rows="5"
                 ></textarea>
+                <% if (errors) { %>
+                <ul>
+                    <% errors.forEach((error) => { %>
+                    <li><%= error.msg %></li>
+                    <% }); %>
+                </ul>
+                <% } %>
                 <button class="btn-primary" type="submit">Add message</button>
             </div>
         </form>
@@ -47,7 +54,7 @@
                     <div class="message-wrapper">
                         <h1 class="message-title"><%= message.title %></h1>
                         <p class="message-text"><%= message.text %></p>
-                        <% if (currentUser && currentUser.member_status) { %>
+                        <% if (currentUser && currentUser.admin_status) { %>
                         <div class="icons-container">
                             <a href="<%= message.url %>/edit"
                                 ><img

@@ -22,7 +22,7 @@
                     Admin status: <% if(currentUser.admin_status){ %>Admin<% } else { %>Not Admin<%
                     } %>
                 </p>
-                <% if(!currentUser.admin_status){ %>
+                <% if(!currentUser.admin_status && currentUser.member_status){ %>
                 <a href="/admin">Become Admin!</a>
                 <% } %>
             </div>
