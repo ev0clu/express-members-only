@@ -9,6 +9,7 @@
     </head>
     <body>
         <header><%- include('./partials/header', {title:title}); %></header>
+        <h3>Welcome <%= currentUser.username %></h3>
         <% if (currentUser && !currentUser.member_status) { %>
         <p class="be-member-text">
             Do you want to be member and write comments? <a href="/member">Click here</a> and join
