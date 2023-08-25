@@ -4,8 +4,9 @@ A simple authentication app has built with Node.js and Express.js framework. Exp
 
 The app feature is to let every visitor to view every messages as anonymous post, but only logged in 'club members' can see which messages is posted by which member.
 There is also a feature to sign-in into the club as admin, who can moderate (update, remove) the messages, which is not possible to 'normal members'.
+To become member, you should click to the link after log in, than accept the rule. To become admin, you should navigate to profile page and click to the link, than answer to the question. You can be admin only that case you have member status and your answer to the question is correct.
 
-### Demo: [Link]()
+### Demo: [Link](https://express-members-only-626t.onrender.com/)
 
 ## Features
 
@@ -38,7 +39,6 @@ There is also a feature to sign-in into the club as admin, who can moderate (upd
 -   [MongoDB](https://www.mongodb.com/)
 -   [Mongoose](https://mongoosejs.com/)
 -   [dotenv](https://www.npmjs.com/package/dotenv)
--   [morgan](https://www.npmjs.com/package/morgan)
 -   [http-errors](https://www.npmjs.com/package/http-errors)
 -   [date-nfs](https://date-fns.org/)
 -   [Passport.js](https://www.passportjs.org/)
