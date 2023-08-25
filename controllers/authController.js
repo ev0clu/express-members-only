@@ -44,9 +44,9 @@ exports.signup_post = [
         .trim()
         .isLength({ min: 4, max: 10 })
         .escape(),
-    body('confirm-password', 'Password fields do not match')
+    body('confirm_password', 'Password fields do not match')
         .trim()
-        .custom((confirmPassword, { req }) => confirmPassword !== req.body.password)
+        .custom((confirmPassword, { req }) => confirmPassword === req.body.password)
         .escape(),
 
     // Process request after validation and sanitization.
