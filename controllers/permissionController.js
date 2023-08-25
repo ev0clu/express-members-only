@@ -125,14 +125,6 @@ exports.post_edit_post = [
         // Extract the validation errors from a request.
         const errors = validationResult(req);
 
-        const message = new Message({
-            title: req.body.title,
-            text: req.body.text,
-            createdBy: req.user.id,
-            createdAt: Date.now(),
-            _id: req.params.id // This is required, or a new ID will be assigned!
-        });
-
         if (!errors.isEmpty()) {
             // There are errors. Render form again with sanitized values/error messages.
 
@@ -146,7 +138,17 @@ exports.post_edit_post = [
             return;
         } else {
             // Data from form is valid. Update the record.
-            await Message.findByIdAndUpdate(req.params.id, message, {});
+            let message = await Message.findById(req.params.id).populate('createdBy').exec();
+
+            const messageUpdate = new Message({
+                title: req.body.title,
+                text: req.body.text,
+                createdBy: message.createdBy,
+                createdAt: Date.now(),
+                _id: req.params.id // This is required, or a new ID will be assigned!
+            });
+
+            await Message.findByIdAndUpdate(req.params.id, messageUpdate, {});
 
             // Redirect to home page.
             res.redirect('/');
