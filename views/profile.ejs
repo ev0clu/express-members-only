@@ -11,16 +11,16 @@
         <header><%- include('./partials/header', {title:title}); %></header>
         <div class="content">
             <div class="rule-container">
-                <h1><%= currentUser.username %> informations:</h1>
+                <h1>User informations:</h1>
                 <p>First name: <%= currentUser.first_name %></p>
                 <p>Last name: <%= currentUser.last_name %></p>
+                <p>Username: <%= currentUser.username %></p>
                 <p>
-                    Member status: <% if(currentUser.member_status){ %> Member <% } else { %>Not
-                    Member<% } %>
+                    Member status: <% if(currentUser.member_status){ %>true<% } else { %>false<% }
+                    %>
                 </p>
                 <p>
-                    Admin status: <% if(currentUser.admin_status){ %>Admin<% } else { %>Not Admin<%
-                    } %>
+                    Admin status: <% if(currentUser.admin_status){ %>true<% } else { %>false<% } %>
                 </p>
                 <% if(!currentUser.admin_status && currentUser.member_status){ %>
                 <a href="/admin">Become Admin!</a>
